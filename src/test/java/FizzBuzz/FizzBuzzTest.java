@@ -71,4 +71,49 @@ public class FizzBuzzTest {
         //then
         Assert.assertEquals("FizzBuzz" , result);
     }
+
+    @Test
+    public void numContains3ButNotDivBy3(){
+        FizzBuzzSoftware target = new FizzBuzzSoftware();
+        //when
+        String result = target.contains(37);
+        //then
+        Assert.assertEquals("Fizz" , result);
+    }
+
+    @Test
+    public void numContains5ButNotDivBy5(){
+        FizzBuzzSoftware target = new FizzBuzzSoftware();
+        //when
+        String result = target.contains(52);
+        //then
+        Assert.assertEquals("Buzz" , result);
+    }
+
+    @Test
+    public void numContains5AndDivBy5(){
+        FizzBuzzSoftware target = new FizzBuzzSoftware();
+        //when
+        String result = target.contains(55);
+        //then
+        Assert.assertEquals("Buzz" , result);
+    }
+
+    @Test
+    public void numContains3AndDivBy3(){
+        FizzBuzzSoftware target = new FizzBuzzSoftware();
+        //when
+        String result = target.contains(33);
+        //then
+        Assert.assertEquals("Fizz" , result);
+    }
+
+    @Test
+    public void numContains3And5AndDivBy5(){
+        FizzBuzzSoftware target = new FizzBuzzSoftware();
+        //when
+        String result = target.contains(35);
+        //then
+        Assert.assertEquals("FizzBuzz" , result);
+    }
 }
