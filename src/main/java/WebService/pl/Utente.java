@@ -4,6 +4,15 @@ public class Utente {
     private int id;
     private String nome;
 
+    public Utente(){
+
+    }
+
+    public Utente(int id, String nome){
+        this.id = id;
+        this.nome = nome;
+    }
+
     public int getId() {
         return id;
     }

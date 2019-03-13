@@ -1,22 +1,39 @@
 package WebService.pl;
 
-import WebService.bl.UtenteBL;;
+import WebService.bl.IUtenteBL;;
 import WebService.bl.UtenteBO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/simple")
 public class UtenteController {
 
-    private final UtenteBL utenteBl;
+    private final IUtenteBL utenteBl;
+    private PLConverterService service = new PLConverterService();
 
     @Inject
-    public UtenteController(@Named("utenteBL") UtenteBL utenteBl) {
+    public UtenteController(@Named("utenteBL") IUtenteBL utenteBl) {
         this.utenteBl = utenteBl;
+    }
+
+    @RequestMapping(
+            path = "/utente",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    @ResponseBody
+    public List<Utente> getAll() {
+        List<Utente> utenti = new ArrayList<>();
+        for (UtenteBO utenteBO : utenteBl.getAll()) {
+            Utente utente = service.convertToUtente(utenteBO);
+            utenti.add(utente);
+        }
+        return utenti;
     }
 
     @RequestMapping(
@@ -25,36 +42,37 @@ public class UtenteController {
             consumes = "application/json",
             produces = "application/json")
     @ResponseBody
-    public UtenteBO insertUtente(@RequestBody UtenteBO utente) {
-       utente = utenteBl.insertUtente(utente);
-       return utente;
+    public String addUtente(@RequestBody Utente utente) {
+        UtenteBO utenteBO = service.convertToUtenteBO(utente);
+        if (utenteBl.validator(utenteBO.getNome())) {
+            UtenteBO newUtente = utenteBl.addUtente(utenteBO);
+            Utente result = service.convertToUtente(newUtente);
+            return String.valueOf(result.getId());
+        }else{
+            return "Nome utente non valido. Il nome deve contenere almeno 3 caratteri e non deve contenere la parola 'test'";
+        }
     }
+
 
     @RequestMapping(
             path = "/utente/{id}",
             method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
-    public UtenteBO getUtente(@PathVariable("id") int id) {
-        UtenteBO utente = utenteBl.getUtente(id);
-        return  utente;
-    }
-
-    @RequestMapping(
-            path = "/utente/{id}",
-            method= RequestMethod.PUT,
-            produces="application/json")
-    @ResponseBody
-    public Utente putUtente(@RequestBody Utente utente) {
+    public Utente getUtente(@PathVariable("id") int id) {
+        UtenteBO utenteBO = utenteBl.getUtenteByID(id);
+        Utente utente = service.convertToUtente(utenteBO);
         return utente;
     }
 
     @RequestMapping(
             path = "/utente/{id}",
             method = RequestMethod.DELETE,
-            produces = "text/html")
+            produces = "application/json")
     @ResponseBody
     public String deleteUtente(@PathVariable("id") int id) {
-        return utenteBl.deleteUtente(id);
+        System.out.println(id);
+        String result = utenteBl.deleteUtente(id);
+        return result;
     }
 }
