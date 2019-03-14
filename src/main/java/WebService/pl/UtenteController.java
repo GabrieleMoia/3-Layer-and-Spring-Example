@@ -15,11 +15,13 @@ import java.util.List;
 public class UtenteController {
 
     private final IUtenteBL utenteBl;
+    private final ValidatorPL validatorPL;
     private PLConverterService service = new PLConverterService();
 
     @Inject
-    public UtenteController(@Named("utenteBL") IUtenteBL utenteBl) {
+    public UtenteController(@Named("utenteBL") IUtenteBL utenteBl, @Named("plValidator") ValidatorPL validatorPL) {
         this.utenteBl = utenteBl;
+        this.validatorPL = validatorPL;
     }
 
     @RequestMapping(
@@ -44,7 +46,7 @@ public class UtenteController {
     @ResponseBody
     public String addUtente(@RequestBody Utente utente) {
         UtenteBO utenteBO = service.convertToUtenteBO(utente);
-        if (utenteBl.validator(utenteBO.getNome())) {
+        if ((validatorPL.validateNameLength(utente))) {
             UtenteBO newUtente = utenteBl.addUtente(utenteBO);
             Utente result = service.convertToUtente(newUtente);
             return String.valueOf(result.getId());

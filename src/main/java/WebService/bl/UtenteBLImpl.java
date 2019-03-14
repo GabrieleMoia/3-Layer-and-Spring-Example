@@ -12,11 +12,13 @@ import java.util.List;
 public class UtenteBLImpl implements IUtenteBL {
 
     private final IUtenteDL utenteDL;
+    private final ValidatorBL validatorBL;
     private BLConverterService service = new BLConverterService();
 
     @Inject
-    public UtenteBLImpl(@Named("utenteDL") IUtenteDL utenteDL) {
+    public UtenteBLImpl(@Named("utenteDL") IUtenteDL utenteDL, @Named("blValidator") ValidatorBL validatorBL) {
         this.utenteDL = utenteDL;
+        this.validatorBL = validatorBL;
     }
 
     @Override
@@ -32,8 +34,13 @@ public class UtenteBLImpl implements IUtenteBL {
     @Override
     public UtenteBO addUtente(UtenteBO utente) {
         UtenteDL utenteDataLayer = service.convertToUtenteDL(utente);
-        UtenteBO utenteBO = service.convertToUtenteBO(utenteDL.addUtente(utenteDataLayer));
-        return utenteBO;
+        if(validator(utente)) {
+            UtenteBO utenteBO = service.convertToUtenteBO(utenteDL.addUtente(utenteDataLayer));
+            return utenteBO;
+        }
+        else{
+            return null;
+        }
     }
 
     @Override
@@ -47,13 +54,10 @@ public class UtenteBLImpl implements IUtenteBL {
         return null;
     }
 
-    @Override
-    public boolean validator(String nome) {
-        boolean result = false;
-        if (!nome.toLowerCase().contains("test") && nome.length() > 2)
-            result = true;
-
-        return result;
+    public boolean validator(UtenteBO utente) {
+        if(validatorBL.validateNameContent(utente))
+            return true;
+            return false;
     }
 
     @Override
