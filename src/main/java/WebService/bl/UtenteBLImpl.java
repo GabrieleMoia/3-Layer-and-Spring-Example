@@ -1,5 +1,6 @@
 package WebService.bl;
 
+import WebService.dl.CountDL;
 import WebService.dl.IUtenteDL;
 import WebService.dl.UtenteDL;
 
@@ -11,20 +12,22 @@ import java.util.List;
 @Named("utenteBL")
 public class UtenteBLImpl implements IUtenteBL {
 
-    private final IUtenteDL utenteDL;
+    private final IUtenteDL dataLayer;
     private final ValidatorBL validatorBL;
+    private final CountDL countDL;
     private BLConverterService service = new BLConverterService();
 
     @Inject
-    public UtenteBLImpl(@Named("utenteDL") IUtenteDL utenteDL, @Named("blValidator") ValidatorBL validatorBL) {
-        this.utenteDL = utenteDL;
+    public UtenteBLImpl(@Named("utenteDL") IUtenteDL dataLayer, @Named("ValidatorNameContent") ValidatorBL validatorBL, @Named("CountDL") CountDL countDL) {
+        this.dataLayer = dataLayer;
         this.validatorBL = validatorBL;
+        this.countDL = countDL;
     }
 
     @Override
     public List<UtenteBO> getAll() {
         List<UtenteBO> utenti = new ArrayList<>();
-        for (UtenteDL utenteDL : utenteDL.getAll()) {
+        for (UtenteDL utenteDL : dataLayer.getAll()) {
             UtenteBO utente = service.convertToUtenteBO(utenteDL);
             utenti.add(utente);
         }
@@ -32,26 +35,27 @@ public class UtenteBLImpl implements IUtenteBL {
     }
 
     @Override
-    public UtenteBO addUtente(UtenteBO utente) {
-        UtenteDL utenteDataLayer = service.convertToUtenteDL(utente);
-        if(validator(utente)) {
-            UtenteBO utenteBO = service.convertToUtenteBO(utenteDL.addUtente(utenteDataLayer));
+    public UtenteBO addUtente(UtenteBO utente) throws Exception {
+        UtenteDL utenteDL = service.convertToUtenteDL(utente);
+        if (validator(utente)) {
+            utente.setEnabled(false);
+            UtenteBO utenteBO = service.convertToUtenteBO(dataLayer.addUtente(utenteDL));
             return utenteBO;
-        }
-        else{
-            return null;
+        } else {
+            throw new Exception("Nome utente non valido");
         }
     }
 
+
     @Override
-    public UtenteBO getUtenteByID(int id) {
-        for (UtenteDL utenteDL : utenteDL.getAll()) {
+    public UtenteBO getUtenteByID(int id) throws Exception {
+        for (UtenteDL utenteDL : dataLayer.getAll()) {
             if (utenteDL.getId() == id) {
                 UtenteBO utente = service.convertToUtenteBO(utenteDL);
                 return utente;
             }
         }
-        return null;
+        throw new Exception("Utente non trovato");
     }
 
     private boolean validator(UtenteBO utente) {
@@ -62,12 +66,41 @@ public class UtenteBLImpl implements IUtenteBL {
     public String deleteUtente(int id) {
         String result = null;
 
-        boolean deleted = utenteDL.deleteUtente(id);
+        boolean deleted = dataLayer.deleteUtente(id);
         if (deleted) {
             result = "Eliminato";
         } else {
             result = "Non trovato";
         }
         return result;
+    }
+
+    @Override
+    public void abilitaUtente(int id) throws Exception {
+        UtenteBO utenteBO = getUtenteByID(id);
+        if (utenteBO == null) {
+            throw new Exception("Utente non trovato");
+        }
+        utenteBO.setEnabled(true);
+        UtenteDL utenteDL = service.convertToUtenteDL(utenteBO);
+        dataLayer.update(utenteDL);
+        countDL.incrementEnabled();
+    }
+
+    @Override
+    public void disabilitaUtente(int id) throws Exception {
+        UtenteBO utenteBO = getUtenteByID(id);
+        if (utenteBO == null) {
+            throw new Exception("Utente non trovato");
+        }
+        utenteBO.setEnabled(false);
+        UtenteDL utenteDL = service.convertToUtenteDL(utenteBO);
+        dataLayer.update(utenteDL);
+        countDL.decrementEnabled();
+    }
+
+    @Override
+    public int countEnabled() {
+        return countDL.getEnabled();
     }
 }

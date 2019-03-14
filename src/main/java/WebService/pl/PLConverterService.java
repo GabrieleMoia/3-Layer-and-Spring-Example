@@ -11,7 +11,7 @@ public class PLConverterService {
     }
 
     public UtenteBO convertToUtenteBO(Utente utente){
-        UtenteBO utenteBO = new UtenteBO(utente.getId(), utente.getNome());
+        UtenteBO utenteBO = new UtenteBO(utente.getId(), utente.getNome(), false);
         return utenteBO;
     }
 }

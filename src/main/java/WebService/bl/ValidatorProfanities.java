@@ -6,15 +6,15 @@ import javax.inject.Named;
 @Named("ValidatorProfanities")
 public class ValidatorProfanities implements ValidatorBL {
 
-    private final ValidatorNameContent validator;
+    private final ValidatorBL validatorBL;
 
-    public ValidatorProfanities(@Named("ValidatorNameContent") ValidatorNameContent validator) {
-        this.validator = validator;
+    public ValidatorProfanities(@Named("FinalValidator") ValidatorBL validatorBL) {
+        this.validatorBL = validatorBL;
     }
 
     @Override
     public boolean validate(UtenteBO utente) {
-        if (this.validator.validate(utente) && utente.getNome().toLowerCase().contains("cazzo"))
+        if (validatorBL.validate(utente) && !utente.getNome().toLowerCase().contains("cazzo"))
             return true;
         return false;
     }

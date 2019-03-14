@@ -6,8 +6,14 @@ import javax.inject.Named;
 @Named("ValidatorNameContent")
 public class ValidatorNameContent implements ValidatorBL {
 
+    private final ValidatorBL validatorBL;
+
+    public ValidatorNameContent(@Named("ValidatorProfanities") ValidatorBL validatorBL) {
+        this.validatorBL = validatorBL;
+    }
+
     @Override
     public boolean validate(UtenteBO utente) {
-       return utente.getNome().toLowerCase().contains("test");
+        return validatorBL.validate(utente) && !utente.getNome().toLowerCase().contains("test");
     }
 }

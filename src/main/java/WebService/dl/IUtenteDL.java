@@ -7,4 +7,5 @@ public interface IUtenteDL {
     UtenteDL addUtente(UtenteDL utente);
     UtenteDL getUtenteByID(int id);
     boolean deleteUtente(int id);
+    void update(UtenteDL utenteDL) throws Exception;
 }

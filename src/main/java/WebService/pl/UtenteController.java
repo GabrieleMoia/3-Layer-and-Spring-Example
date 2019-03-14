@@ -14,13 +14,13 @@ import java.util.List;
 @RequestMapping("/api/simple")
 public class UtenteController {
 
-    private final IUtenteBL utenteBl;
+    private final IUtenteBL businessLayer;
     private final ValidatorPL validatorPL;
     private PLConverterService service = new PLConverterService();
 
     @Inject
-    public UtenteController(@Named("utenteBL") IUtenteBL utenteBl, @Named("plValidator") ValidatorPL validatorPL) {
-        this.utenteBl = utenteBl;
+    public UtenteController(@Named("utenteBL") IUtenteBL businessLayer, @Named("plValidator") ValidatorPL validatorPL) {
+        this.businessLayer = businessLayer;
         this.validatorPL = validatorPL;
     }
 
@@ -31,7 +31,7 @@ public class UtenteController {
     @ResponseBody
     public List<Utente> getAll() {
         List<Utente> utenti = new ArrayList<>();
-        for (UtenteBO utenteBO : utenteBl.getAll()) {
+        for (UtenteBO utenteBO : businessLayer.getAll()) {
             Utente utente = service.convertToUtente(utenteBO);
             utenti.add(utente);
         }
@@ -44,10 +44,10 @@ public class UtenteController {
             consumes = "application/json",
             produces = "application/json")
     @ResponseBody
-    public String addUtente(@RequestBody Utente utente) {
+    public String addUtente(@RequestBody Utente utente) throws Exception {
         UtenteBO utenteBO = service.convertToUtenteBO(utente);
         if ((validatorPL.validateNameLength(utente))) {
-            UtenteBO newUtente = utenteBl.addUtente(utenteBO);
+            UtenteBO newUtente = businessLayer.addUtente(utenteBO);
             Utente result = service.convertToUtente(newUtente);
             return String.valueOf(result.getId());
         }else{
@@ -57,14 +57,41 @@ public class UtenteController {
 
 
     @RequestMapping(
+            path = "/enable/{id}",
+            method= RequestMethod.PUT,
+            produces="application/json")
+    @ResponseBody
+    public void enableUtente (@PathVariable("id") int idUtente) throws Exception {
+        businessLayer.abilitaUtente(idUtente);
+    }
+
+    @RequestMapping(
+            path = "/disable/{id}",
+            method= RequestMethod.PUT,
+            produces="application/json")
+    @ResponseBody
+    public void disableUtente (@PathVariable("id") int idUtente) throws Exception {
+        businessLayer.disabilitaUtente(idUtente);
+    }
+
+    @RequestMapping(
             path = "/utente/{id}",
             method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
-    public Utente getUtente(@PathVariable("id") int id) {
-        UtenteBO utenteBO = utenteBl.getUtenteByID(id);
+    public Utente getUtente(@PathVariable("id") int id) throws Exception {
+        UtenteBO utenteBO = businessLayer.getUtenteByID(id);
         Utente utente = service.convertToUtente(utenteBO);
         return utente;
+    }
+
+    @RequestMapping(
+            path = "/countEnabled",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    @ResponseBody
+    public Count getEnable() {
+        return new Count(businessLayer.countEnabled());
     }
 
     @RequestMapping(
@@ -74,7 +101,7 @@ public class UtenteController {
     @ResponseBody
     public String deleteUtente(@PathVariable("id") int id) {
         System.out.println(id);
-        String result = utenteBl.deleteUtente(id);
+        String result = businessLayer.deleteUtente(id);
         return result;
     }
 }
