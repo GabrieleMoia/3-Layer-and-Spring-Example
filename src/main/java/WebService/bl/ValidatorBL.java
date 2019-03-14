@@ -1,5 +1,6 @@
 package WebService.bl;
 
+//interfaccia per la validazione
 public interface ValidatorBL {
-    boolean validateNameContent(UtenteBO utente);
+    boolean validate(UtenteBO utente);
 }

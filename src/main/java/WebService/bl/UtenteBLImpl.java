@@ -54,10 +54,8 @@ public class UtenteBLImpl implements IUtenteBL {
         return null;
     }
 
-    public boolean validator(UtenteBO utente) {
-        if(validatorBL.validateNameContent(utente))
-            return true;
-            return false;
+    private boolean validator(UtenteBO utente) {
+        return validatorBL.validate(utente);
     }
 
     @Override
