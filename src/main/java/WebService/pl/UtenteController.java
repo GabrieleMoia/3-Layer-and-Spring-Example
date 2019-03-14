@@ -57,7 +57,7 @@ public class UtenteController {
 
 
     @RequestMapping(
-            path = "/enable/{id}",
+            path = "/utente/enable/{id}",
             method= RequestMethod.PUT,
             produces="application/json")
     @ResponseBody
@@ -66,7 +66,7 @@ public class UtenteController {
     }
 
     @RequestMapping(
-            path = "/disable/{id}",
+            path = "/utente/disable/{id}",
             method= RequestMethod.PUT,
             produces="application/json")
     @ResponseBody
@@ -83,15 +83,6 @@ public class UtenteController {
         UtenteBO utenteBO = businessLayer.getUtenteByID(id);
         Utente utente = service.convertToUtente(utenteBO);
         return utente;
-    }
-
-    @RequestMapping(
-            path = "/countEnabled",
-            method = RequestMethod.GET,
-            produces = "application/json")
-    @ResponseBody
-    public Count getEnable() {
-        return new Count(businessLayer.countEnabled());
     }
 
     @RequestMapping(

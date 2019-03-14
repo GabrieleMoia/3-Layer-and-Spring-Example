@@ -9,5 +9,4 @@ public interface IUtenteBL {
     String deleteUtente(int id);
     void abilitaUtente(int id) throws Exception;
     void disabilitaUtente(int idUtente) throws Exception;
-    int countEnabled();
 }
