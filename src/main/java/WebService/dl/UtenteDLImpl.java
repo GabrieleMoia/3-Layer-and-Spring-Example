@@ -1,5 +1,7 @@
 package WebService.dl;
 
+import WebService.pl.Count;
+
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +11,12 @@ import java.util.List;
 public class UtenteDLImpl implements IUtenteDL {
 
     private HashMap<Integer, UtenteDL> utenti = new HashMap<Integer, UtenteDL>();
-    private Integer maxId=0;
+    private Integer maxId = 0;
+    private final CountDL countDL;
+
+    public UtenteDLImpl(@Named("CountDL") CountDL countDL) {
+        this.countDL = countDL;
+    }
 
     @Override
     public List<UtenteDL> getAll() {
@@ -24,16 +31,19 @@ public class UtenteDLImpl implements IUtenteDL {
 
     @Override
     public UtenteDL getUtenteByID(int id) {
-       if(!utenti.containsKey(id)){
-           return null;
-       }
-       return utenti.get(id);
+        if (!utenti.containsKey(id)) {
+            return null;
+        }
+        return utenti.get(id);
     }
 
     @Override
     public boolean deleteUtente(int id) {
-        if(!utenti.containsKey(id)){
+        if (!utenti.containsKey(id)) {
             return false;
+        }
+        if(utenti.get(id).isEnabled()){
+            countDL.decrementEnabled();
         }
         utenti.remove(id);
         return true;
@@ -41,7 +51,7 @@ public class UtenteDLImpl implements IUtenteDL {
 
     @Override
     public void update(UtenteDL utenteDL) throws Exception {
-        if(!utenti.containsKey(utenteDL.getId())){
+        if (!utenti.containsKey(utenteDL.getId())) {
             throw new Exception("Utente non trovato");
         }
         utenti.put(utenteDL.getId(), utenteDL);

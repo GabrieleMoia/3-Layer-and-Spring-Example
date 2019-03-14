@@ -68,11 +68,7 @@ public class UtenteBLImpl implements IUtenteBL {
         String result = null;
 
         boolean deleted = dataLayer.deleteUtente(id);
-        if (deleted) {
-            result = "Eliminato";
-        } else {
-            result = "Non trovato";
-        }
+        result = deleted ? "Eliminato" : "Non trovato";
         return result;
     }
 
@@ -82,10 +78,12 @@ public class UtenteBLImpl implements IUtenteBL {
         if (utenteBO == null) {
             throw new Exception("Utente non trovato");
         }
-        utenteBO.setEnabled(true);
-        UtenteDL utenteDL = service.convertToUtenteDL(utenteBO);
-        dataLayer.update(utenteDL);
-        bus.send(new UtenteMessage(true));
+        if (!utenteBO.isEnabled()) {
+            utenteBO.setEnabled(true);
+            UtenteDL utenteDL = service.convertToUtenteDL(utenteBO);
+            dataLayer.update(utenteDL);
+            bus.send(new UtenteMessage(true));
+        }
     }
 
     @Override
@@ -94,9 +92,11 @@ public class UtenteBLImpl implements IUtenteBL {
         if (utenteBO == null) {
             throw new Exception("Utente non trovato");
         }
-        utenteBO.setEnabled(false);
-        UtenteDL utenteDL = service.convertToUtenteDL(utenteBO);
-        dataLayer.update(utenteDL);
-        bus.send(new UtenteMessage(false));
+        if (utenteBO.isEnabled()) {
+            utenteBO.setEnabled(false);
+            UtenteDL utenteDL = service.convertToUtenteDL(utenteBO);
+            dataLayer.update(utenteDL);
+            bus.send(new UtenteMessage(false));
+        }
     }
 }
