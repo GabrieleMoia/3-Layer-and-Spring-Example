@@ -1,7 +1,7 @@
 package WebService.pl;
 
-import WebService.bl.UtenteBO;
-import WebService.dl.UtenteDL;
+import WebService.bl.utente.UtenteBO;
+import WebService.pl.utente.Utente;
 
 public class PLConverterService {
 

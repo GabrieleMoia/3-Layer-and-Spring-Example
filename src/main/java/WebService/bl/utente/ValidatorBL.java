@@ -1,4 +1,4 @@
-package WebService.bl;
+package WebService.bl.utente;
 
 //interfaccia per la validazione
 public interface ValidatorBL {

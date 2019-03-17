@@ -1,7 +1,6 @@
-package WebService.bl;
+package WebService.bl.utente;
 
-import WebService.dl.UtenteDL;
-import WebService.pl.Utente;
+import WebService.dl.utente.UtenteDL;
 
 public class BLConverterService {
 

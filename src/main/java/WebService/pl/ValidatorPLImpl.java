@@ -1,5 +1,7 @@
 package WebService.pl;
 
+import WebService.pl.utente.Utente;
+
 import javax.inject.Named;
 
 @Named("plValidator")

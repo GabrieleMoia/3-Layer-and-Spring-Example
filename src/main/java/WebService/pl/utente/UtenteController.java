@@ -1,7 +1,10 @@
-package WebService.pl;
+package WebService.pl.utente;
 
-import WebService.bl.IUtenteBL;;
-import WebService.bl.UtenteBO;
+import WebService.bl.utente.IUtenteBL;;
+import WebService.bl.utente.UtenteBO;
+import WebService.pl.PLConverterService;
+import WebService.pl.ValidatorPL;
+import WebService.pl.utente.Utente;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

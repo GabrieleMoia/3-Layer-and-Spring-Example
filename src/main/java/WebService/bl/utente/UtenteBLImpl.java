@@ -1,9 +1,8 @@
-package WebService.bl;
+package WebService.bl.utente;
 
 import WebService.bus.Bus;
-import WebService.dl.CountDL;
-import WebService.dl.IUtenteDL;
-import WebService.dl.UtenteDL;
+import WebService.dl.utente.IUtenteDL;
+import WebService.dl.utente.UtenteDL;
 
 import javax.inject.Inject;
 import javax.inject.Named;

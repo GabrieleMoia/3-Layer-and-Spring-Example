@@ -1,4 +1,4 @@
-package WebService.pl;
+package WebService.pl.utente;
 
 public class Utente {
     private int id;

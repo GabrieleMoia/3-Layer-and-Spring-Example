@@ -1,6 +1,4 @@
-package WebService.dl;
-
-import WebService.pl.Count;
+package WebService.dl.utente;
 
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -11,7 +9,6 @@ import java.util.List;
 public class UtenteDLImpl implements IUtenteDL {
 
     private HashMap<Integer, UtenteDL> utenti = new HashMap<Integer, UtenteDL>();
-    private Integer maxId = 0;
     private final CountDL countDL;
 
     public UtenteDLImpl(@Named("CountDL") CountDL countDL) {

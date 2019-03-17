@@ -1,4 +1,4 @@
-package WebService.bl;
+package WebService.bl.utente;
 
 import WebService.bus.MessageConsumer;
 
