@@ -2,9 +2,7 @@ package WebService.pl.utente;
 
 import WebService.bl.utente.IUtenteBL;;
 import WebService.bl.utente.UtenteBO;
-import WebService.pl.PLConverterService;
-import WebService.pl.ValidatorPL;
-import WebService.pl.utente.Utente;
+import WebService.pl.validator.ValidatorPL;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +17,7 @@ public class UtenteController {
 
     private final IUtenteBL businessLayer;
     private final ValidatorPL validatorPL;
-    private PLConverterService service = new PLConverterService();
+    private UtentePLConverterService service = new UtentePLConverterService();
 
     @Inject
     public UtenteController(@Named("utenteBL") IUtenteBL businessLayer, @Named("plValidator") ValidatorPL validatorPL) {

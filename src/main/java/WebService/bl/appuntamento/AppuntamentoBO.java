@@ -5,18 +5,18 @@ import java.util.Date;
 public class AppuntamentoBO {
     private int id;
     private int idUtente;
-    private Date dataInzio;
-    private Date dataFine;
+    private String dataInizio;
+    private String dataFine;
     private String descrizione;
 
     public AppuntamentoBO() {
 
     }
 
-    public AppuntamentoBO(int id, int idUtente, Date dataInzio, Date dataFine, String descrizione) {
+    public AppuntamentoBO(int id, int idUtente, String dataInizio, String dataFine, String descrizione) {
         this.id = id;
         this.idUtente = idUtente;
-        this.dataInzio = dataInzio;
+        this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.descrizione = descrizione;
     }
@@ -37,19 +37,19 @@ public class AppuntamentoBO {
         this.idUtente = idUtente;
     }
 
-    public Date getDataInzio() {
-        return dataInzio;
+    public String getDataInizio() {
+        return dataInizio;
     }
 
-    public void setDataInzio(Date dataInzio) {
-        this.dataInzio = dataInzio;
+    public void setDataInzio(String dataInizio) {
+        this.dataInizio = dataInizio;
     }
 
-    public Date getDataFine() {
+    public String getDataFine() {
         return dataFine;
     }
 
-    public void setDataFine(Date dataFine) {
+    public void setDataFine(String dataFine) {
         this.dataFine = dataFine;
     }
 

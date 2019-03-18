@@ -2,7 +2,7 @@ package WebService.bl.utente;
 
 import WebService.dl.utente.UtenteDL;
 
-public class BLConverterService {
+public class UtenteBLConverterService {
 
     public UtenteDL convertToUtenteDL (UtenteBO utenteBO){
         UtenteDL utenteDL = new UtenteDL(utenteBO.getId(), utenteBO.getNome(), utenteBO.isEnabled());

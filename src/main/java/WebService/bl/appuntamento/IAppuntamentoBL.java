@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface IAppuntamentoBL {
 
-    List<AppuntamentoBO> getAll();
-    AppuntamentoBO addAppuntamento(AppuntamentoBO appuntamentoBO);
-    AppuntamentoBO getAppuntamentiByIdUtente(int idUtente);
-    AppuntamentoBO editAppuntamento(int id);
-    String deleteAppuntamento(int id);
+    List<AppuntamentoBO> getAll() throws Exception;
+    AppuntamentoBO addAppuntamento(AppuntamentoBO appuntamentoBO) throws Exception;
+    List<AppuntamentoBO> getAppuntamentiByIdUtente(int idUtente) throws Exception;
+    AppuntamentoBO editAppuntamento(int id) throws Exception;
+    String deleteAppuntamento(int id) throws Exception;
 
 }

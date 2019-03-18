@@ -1,16 +1,16 @@
-package WebService.pl;
+package WebService.pl.utente;
 
 import WebService.bl.utente.UtenteBO;
 import WebService.pl.utente.Utente;
 
-public class PLConverterService {
+public class UtentePLConverterService {
 
-    public Utente convertToUtente (UtenteBO utenteBO){
+    public Utente convertToUtente(UtenteBO utenteBO) {
         Utente utente = new Utente(utenteBO.getId(), utenteBO.getNome());
         return utente;
     }
 
-    public UtenteBO convertToUtenteBO(Utente utente){
+    public UtenteBO convertToUtenteBO(Utente utente) {
         UtenteBO utenteBO = new UtenteBO(utente.getId(), utente.getNome(), false);
         return utenteBO;
     }

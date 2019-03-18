@@ -1,20 +1,19 @@
-package WebService.dl.appuntamento;
+package WebService.pl.appuntamento;
 
 import java.util.Date;
 
-public class AppuntamentoDL {
-
+public class AppuntamentoPL {
     private int id;
     private int idUtente;
     private String dataInizio;
     private String dataFine;
     private String descrizione;
 
-    public AppuntamentoDL() {
+    public AppuntamentoPL() {
 
     }
 
-    public AppuntamentoDL(int id, int idUtente, String dataInizio, String dataFine, String descrizione) {
+    public AppuntamentoPL(int id, int idUtente, String dataInizio, String dataFine, String descrizione) {
         this.id = id;
         this.idUtente = idUtente;
         this.dataInizio = dataInizio;

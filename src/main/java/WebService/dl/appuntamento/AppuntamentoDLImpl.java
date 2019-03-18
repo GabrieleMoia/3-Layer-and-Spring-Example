@@ -14,8 +14,8 @@ public class AppuntamentoDLImpl implements IAppuntamentoDL {
     private final IUtenteDL utenteDL;
     private HashMap<Integer, AppuntamentoDL> appuntamenti = new HashMap<Integer, AppuntamentoDL>();
 
-    public AppuntamentoDLImpl(@Named("UtenteDL") IUtenteDL utenteDL){
-        this.utenteDL=utenteDL;
+    public AppuntamentoDLImpl(@Named("utenteDL") IUtenteDL utenteDL) {
+        this.utenteDL = utenteDL;
     }
 
     @Override
@@ -30,18 +30,27 @@ public class AppuntamentoDLImpl implements IAppuntamentoDL {
     }
 
     @Override
-    public List<AppuntamentoDL> getAppuntamentiByIdUtente(int idUtente) {
-
+    public List<AppuntamentoDL> getAppuntamentiByIdUtente(int idUtente) throws Exception {
+        List<AppuntamentoDL> appuntamenti = getAll();
         List<UtenteDL> utenti = utenteDL.getAll();
-        return null;
+
+        List<AppuntamentoDL> appuntamentiByUtente = new ArrayList<>();
+
+        for (AppuntamentoDL appuntamento : appuntamenti) {
+            if (appuntamento.getIdUtente() == idUtente) {
+                appuntamentiByUtente.add(appuntamento);
+            }
+        }
+        return appuntamentiByUtente;
     }
 
     @Override
-    public void editAppuntamento(AppuntamentoDL appuntamentoDL) throws Exception {
+    public AppuntamentoDL editAppuntamento(AppuntamentoDL appuntamentoDL) throws Exception {
         if (!appuntamenti.containsKey(appuntamentoDL.getId())) {
             throw new Exception("Appuntamento non trovato");
         }
         appuntamenti.put(appuntamentoDL.getId(), appuntamentoDL);
+        return appuntamentoDL;
     }
 
     @Override

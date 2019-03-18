@@ -1,14 +1,16 @@
-package WebService.bl.utente;
+package WebService.bl.validator.utente;
+
+import WebService.bl.utente.UtenteBO;
 
 import javax.inject.Named;
 
 //Prima implementazione dell'interfaccia quindi definisco solo il metodo validate
 @Named("ValidatorNameContent")
-public class ValidatorNameContent implements ValidatorBL {
+public class ValidatorNameContent implements UtenteValidatorBL {
 
-    private final ValidatorBL validatorBL;
+    private final UtenteValidatorBL validatorBL;
 
-    public ValidatorNameContent(@Named("ValidatorProfanities") ValidatorBL validatorBL) {
+    public ValidatorNameContent(@Named("ValidatorProfanities") UtenteValidatorBL validatorBL) {
         this.validatorBL = validatorBL;
     }
 

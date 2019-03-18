@@ -1,5 +1,6 @@
 package WebService.bl.utente;
 
+import WebService.bl.validator.utente.UtenteValidatorBL;
 import WebService.bus.Bus;
 import WebService.dl.utente.IUtenteDL;
 import WebService.dl.utente.UtenteDL;
@@ -13,12 +14,12 @@ import java.util.List;
 public class UtenteBLImpl implements IUtenteBL {
 
     private final IUtenteDL dataLayer;
-    private final ValidatorBL validatorBL;
-    private BLConverterService service = new BLConverterService();
+    private final UtenteValidatorBL validatorBL;
+    private UtenteBLConverterService service = new UtenteBLConverterService();
     private final Bus bus;
 
     @Inject
-    public UtenteBLImpl(@Named("utenteDL") IUtenteDL dataLayer, @Named("ValidatorNameContent") ValidatorBL validatorBL, @Named("bus") Bus bus) {
+    public UtenteBLImpl(@Named("utenteDL") IUtenteDL dataLayer, @Named("ValidatorNameContent") UtenteValidatorBL validatorBL, @Named("bus") Bus bus) {
         this.dataLayer = dataLayer;
         this.validatorBL = validatorBL;
         this.bus = bus;
