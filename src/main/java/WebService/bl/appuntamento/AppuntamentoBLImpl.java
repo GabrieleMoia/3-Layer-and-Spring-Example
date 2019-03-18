@@ -1,7 +1,5 @@
 package WebService.bl.appuntamento;
 
-import WebService.bl.utente.IUtenteBL;
-import WebService.bl.utente.UtenteBO;
 import WebService.bl.validator.appuntamento.AppuntamentoValidatorBL;
 import WebService.dl.appuntamento.AppuntamentoDL;
 import WebService.dl.appuntamento.IAppuntamentoDL;
@@ -14,14 +12,12 @@ import java.util.List;
 public class AppuntamentoBLImpl implements IAppuntamentoBL {
 
     private final IAppuntamentoDL dataLayer;
-    private final IUtenteBL utenteBusinessLayer;
     AppuntamentoBLConverterService service = new AppuntamentoBLConverterService();
     private final AppuntamentoValidatorBL validatorBL;
 
 
-    public AppuntamentoBLImpl(@Named("AppuntamentoDL") IAppuntamentoDL dataLayer, @Named("utenteBL") IUtenteBL utenteBusinessLayer, @Named("ValidatorUserExist") AppuntamentoValidatorBL validatorBL) {
+    public AppuntamentoBLImpl(@Named("AppuntamentoDL") IAppuntamentoDL dataLayer, @Named("ValidatorUserExist") AppuntamentoValidatorBL validatorBL) {
         this.dataLayer = dataLayer;
-        this.utenteBusinessLayer = utenteBusinessLayer;
         this.validatorBL = validatorBL;
     }
 
@@ -101,16 +97,6 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
         date.add(appuntamentoBO.getDataFine());
         date.add(appuntamentoBO.getDataInizio());
         return date;
-    }
-
-    private boolean checkIfUserHaveMeeting(AppuntamentoBO appuntamentoBO) throws Exception {
-        List<AppuntamentoBO> appuntamenti = getAll();
-        for (AppuntamentoBO appuntamento : appuntamenti) {
-            if (appuntamento.getIdUtente() == appuntamentoBO.getIdUtente()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private boolean validator(AppuntamentoBO appuntamentoBO) throws Exception {
