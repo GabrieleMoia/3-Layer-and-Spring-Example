@@ -1,6 +1,9 @@
 package WebService.bl.appuntamento;
 
+import WebService.bl.utente.UtenteMessage;
 import WebService.bl.validator.appuntamento.AppuntamentoValidatorBL;
+import WebService.bus.Bus;
+import WebService.bus.BusMessage;
 import WebService.dl.appuntamento.AppuntamentoDL;
 import WebService.dl.appuntamento.IAppuntamentoDL;
 
@@ -14,11 +17,13 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
     private final IAppuntamentoDL dataLayer;
     AppuntamentoBLConverterService service = new AppuntamentoBLConverterService();
     private final AppuntamentoValidatorBL validatorBL;
+    private final Bus bus;
 
-
-    public AppuntamentoBLImpl(@Named("AppuntamentoDL") IAppuntamentoDL dataLayer, @Named("ValidatorUserExist") AppuntamentoValidatorBL validatorBL) {
+    public AppuntamentoBLImpl(@Named("AppuntamentoDL") IAppuntamentoDL dataLayer, @Named("ValidatorUserExist") AppuntamentoValidatorBL validatorBL, @Named("bus") Bus bus) {
         this.dataLayer = dataLayer;
         this.validatorBL = validatorBL;
+        this.bus = bus;
+        bus.register(AppuntamentoMessage.class, this);
     }
 
     @Override
@@ -32,11 +37,11 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
     }
 
     @Override
-    public AppuntamentoBO addAppuntamento(AppuntamentoBO appuntamentoBO) throws Exception {
+    public void addAppuntamento(AppuntamentoBO appuntamentoBO) throws Exception {
         AppuntamentoDL appuntamentoDL = service.convertToAppuntamentoDL(appuntamentoBO);
         if (validator(appuntamentoBO) && checkConcomitance(appuntamentoBO)) {
             dataLayer.addAppuntamento(appuntamentoDL);
-            return appuntamentoBO;
+            bus.send(new AppuntamentoMessage(true));
         } else {
             throw new Exception("Utente non esistente o orario già occupato da appuntamento");
         }
@@ -67,13 +72,13 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
     }
 
     @Override
-    public String deleteAppuntamento(int id) throws Exception {
+    public void deleteAppuntamento(int id) throws Exception {
         String result = null;
 
         boolean deleted = dataLayer.deleteAppuntamento(id);
-        result = deleted ? "Eliminato" : "Non trovato";
-        return result;
+        bus.send(new AppuntamentoMessage(false));
     }
+
 
     private boolean checkConcomitance(AppuntamentoBO appuntamentoBO) throws Exception {
         List<AppuntamentoBO> appuntamentiBO = getAppuntamentiByIdUtente(appuntamentoBO.getIdUtente());
@@ -101,5 +106,20 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
 
     private boolean validator(AppuntamentoBO appuntamentoBO) throws Exception {
         return validatorBL.validate(appuntamentoBO);
+    }
+
+    @Override
+    public void handle(BusMessage messageType) throws Exception {
+        AppuntamentoMessage msg = (AppuntamentoMessage) messageType;
+        if (msg.getUtenteAddedDeleted()) {
+            dataLayer.writeMessage("Appuntamento Aggiunto");
+        } else {
+            dataLayer.writeMessage("Appuntamento Rimosso");
+        }
+    }
+
+    @Override
+    public String getMessage() {
+        return dataLayer.getMessage();
     }
 }

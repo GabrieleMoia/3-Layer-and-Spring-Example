@@ -13,6 +13,7 @@ public class AppuntamentoDLImpl implements IAppuntamentoDL {
 
     private final IUtenteDL utenteDL;
     private HashMap<Integer, AppuntamentoDL> appuntamenti = new HashMap<Integer, AppuntamentoDL>();
+    String message;
 
     public AppuntamentoDLImpl(@Named("utenteDL") IUtenteDL utenteDL) {
         this.utenteDL = utenteDL;
@@ -60,5 +61,15 @@ public class AppuntamentoDLImpl implements IAppuntamentoDL {
         }
         appuntamenti.remove(id);
         return true;
+    }
+
+    @Override
+    public void writeMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

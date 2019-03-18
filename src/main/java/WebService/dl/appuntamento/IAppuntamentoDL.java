@@ -8,4 +8,6 @@ public interface IAppuntamentoDL {
     List<AppuntamentoDL> getAppuntamentiByIdUtente(int idUtente) throws Exception;
     AppuntamentoDL editAppuntamento(AppuntamentoDL appuntamentoDL) throws Exception;
     boolean deleteAppuntamento(int id) throws Exception;
+    void writeMessage(String message);
+    String getMessage();
 }

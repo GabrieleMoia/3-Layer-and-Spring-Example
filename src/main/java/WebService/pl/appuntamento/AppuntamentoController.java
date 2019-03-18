@@ -50,12 +50,11 @@ public class AppuntamentoController {
     @ResponseBody
     public String addAppuntamento(@RequestBody AppuntamentoPL appuntamentoPL) throws Exception {
         AppuntamentoBO appuntamentoBO = service.convertToAppuntamentoBO(appuntamentoPL);
-        AppuntamentoBO newAppuntamento = businessLayer.addAppuntamento(appuntamentoBO);
-        if (!validatorPL.validateDateFormat(newAppuntamento.getDataInizio()) && validatorPL.validateDateFormat(newAppuntamento.getDataFine())) {
+        if (!validatorPL.validateDateFormat(appuntamentoBO.getDataInizio()) && validatorPL.validateDateFormat(appuntamentoBO.getDataFine())) {
             throw new Exception("Date format not valid -- yyyy-MM-dd HH:mm:ss");
         }
-        AppuntamentoPL result = service.convertToAppuntamentoPL(newAppuntamento);
-        return String.valueOf(result.getId());
+        businessLayer.addAppuntamento(appuntamentoBO);
+        return businessLayer.getMessage();
     }
 
     @RequestMapping(
@@ -78,7 +77,7 @@ public class AppuntamentoController {
             produces = "application/json")
     @ResponseBody
     public String deleteAppuntamento(@PathVariable("id") int id) throws Exception {
-        String result = businessLayer.deleteAppuntamento(id);
-        return result;
+        businessLayer.deleteAppuntamento(id);
+        return businessLayer.getMessage();
     }
 }

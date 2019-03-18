@@ -1,13 +1,15 @@
 package WebService.bl.appuntamento;
 
+import WebService.bus.MessageConsumer;
+
 import java.util.List;
 
-public interface IAppuntamentoBL {
+public interface IAppuntamentoBL extends MessageConsumer {
 
     List<AppuntamentoBO> getAll() throws Exception;
-    AppuntamentoBO addAppuntamento(AppuntamentoBO appuntamentoBO) throws Exception;
+    void addAppuntamento(AppuntamentoBO appuntamentoBO) throws Exception;
     List<AppuntamentoBO> getAppuntamentiByIdUtente(int idUtente) throws Exception;
     AppuntamentoBO editAppuntamento(int id) throws Exception;
-    String deleteAppuntamento(int id) throws Exception;
-
+    void deleteAppuntamento(int id) throws Exception;
+    String getMessage();
 }
