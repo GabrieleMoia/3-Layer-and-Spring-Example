@@ -4,7 +4,7 @@ import WebService.bus.MessageConsumer;
 
 import java.util.List;
 
-public interface IAppuntamentoBL extends MessageConsumer {
+public interface IAppuntamentoBL{
 
     List<AppuntamentoBO> getAll() throws Exception;
     void addAppuntamento(AppuntamentoBO appuntamentoBO) throws Exception;

@@ -23,7 +23,6 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
         this.dataLayer = dataLayer;
         this.validatorBL = validatorBL;
         this.bus = bus;
-        bus.register(AppuntamentoMessage.class, this);
     }
 
     @Override
@@ -41,7 +40,6 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
         AppuntamentoDL appuntamentoDL = service.convertToAppuntamentoDL(appuntamentoBO);
         if (validator(appuntamentoBO)) {
             dataLayer.addAppuntamento(appuntamentoDL);
-            bus.send(new AppuntamentoMessage(true));
         } else {
             throw new Exception("Utente non esistente o orario già occupato da appuntamento");
         }
@@ -76,21 +74,10 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
         String result = null;
 
         boolean deleted = dataLayer.deleteAppuntamento(id);
-        bus.send(new AppuntamentoMessage(false));
     }
 
     private boolean validator(AppuntamentoBO appuntamentoBO) throws Exception {
         return validatorBL.validate(appuntamentoBO);
-    }
-
-    @Override
-    public void handle(BusMessage messageType) throws Exception {
-        AppuntamentoMessage msg = (AppuntamentoMessage) messageType;
-        if (msg.getUtenteAddedDeleted()) {
-            dataLayer.writeMessage("Appuntamento Aggiunto");
-        } else {
-            dataLayer.writeMessage("Appuntamento Rimosso");
-        }
     }
 
     @Override

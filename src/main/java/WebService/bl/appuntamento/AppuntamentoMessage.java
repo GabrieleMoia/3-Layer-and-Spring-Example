@@ -3,17 +3,17 @@ package WebService.bl.appuntamento;
 import WebService.bus.BusMessage;
 
 public class AppuntamentoMessage implements BusMessage {
-    boolean utenteAddedDeleted;
+    int idUtente;
 
-    public AppuntamentoMessage(boolean utenteAddedDeleted) {
-        this.utenteAddedDeleted = utenteAddedDeleted;
+    public AppuntamentoMessage(int idUtente) {
+        this.idUtente = idUtente;
     }
 
-    public boolean getUtenteAddedDeleted() {
-        return utenteAddedDeleted;
+    public int getIdUtente() {
+        return idUtente;
     }
 
-    public void setUtenteAddedDeleted(boolean utenteAddedDeleted) {
-        this.utenteAddedDeleted = utenteAddedDeleted;
+    public void setIdUtente(int idUtente) {
+        this.idUtente = idUtente;
     }
 }

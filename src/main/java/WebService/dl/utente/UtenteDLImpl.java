@@ -1,13 +1,11 @@
 package WebService.dl.utente;
 
+import WebService.dl.count.CountDL;
 import WebService.persistence.JpaHelper;
-import WebService.pl.utente.Utente;
 
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Named("utenteDL")

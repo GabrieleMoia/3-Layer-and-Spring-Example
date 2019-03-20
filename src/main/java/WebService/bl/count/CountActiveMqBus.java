@@ -3,8 +3,7 @@ package WebService.bl.count;
 import WebService.bl.utente.UtenteMessage;
 import WebService.bus.Bus;
 import WebService.bus.BusMessage;
-import WebService.dl.utente.CountDL;
-import WebService.dl.utente.IUtenteDL;
+import WebService.dl.count.CountDL;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 

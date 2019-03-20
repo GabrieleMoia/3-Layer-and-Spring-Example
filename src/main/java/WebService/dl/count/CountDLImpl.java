@@ -1,4 +1,4 @@
-package WebService.dl.utente;
+package WebService.dl.count;
 
 import javax.inject.Named;
 
