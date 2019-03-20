@@ -1,4 +1,4 @@
-package WebService.bl.count;
+package WebService.bus.jms;
 
 import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;

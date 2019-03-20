@@ -20,9 +20,9 @@ public class CountActiveMqBus extends CountBLImpl {
     }
 
     @JmsListener(
-            destination = "utenti_enabled",
-            containerFactory = "queueListenerFactory",
-            selector = "classtype = 'UtenteMessage'")
+            destination = "utenti_enabled", //nome della coda dove invia i messaggi
+            containerFactory = "queueListenerFactory", //dichiarazione del listener dove legge i messaggi
+            selector = "classtype = 'UtenteMessage'") //tipo di messaggio restituito
     public void handle(UtenteMessage messageType) throws Exception {
         super.handle((BusMessage)messageType);
     }
