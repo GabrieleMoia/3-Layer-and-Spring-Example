@@ -1,12 +1,16 @@
-package WebService.bl.utente;
+package WebService.bl.count;
 
+import WebService.bl.count.CountBL;
+import WebService.bl.utente.UtenteMessage;
 import WebService.bus.Bus;
 import WebService.bus.BusMessage;
 import WebService.dl.utente.CountDL;
+import WebService.dl.utente.IUtenteDL;
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.stereotype.Component;
 
 import javax.inject.Named;
 
-@Named("CountBL")
 public class CountBLImpl implements CountBL {
     private final CountDL countDL;
 
@@ -25,6 +29,7 @@ public class CountBLImpl implements CountBL {
             countDL.decrementEnabled();
         }
     }
+
 
     @Override
     public int countEnabled() {

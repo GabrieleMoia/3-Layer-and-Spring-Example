@@ -13,9 +13,9 @@ import java.util.List;
 @RunWith(JUnit4.class)
 public class AppuntamentiDLTest {
 
-    private CountDL countDL= new CountDLImpl();
+    /*private CountDL countDL= new CountDLImpl();
     private IUtenteDL utenteDL1 = new UtenteDLImpl(countDL);
-    private AppuntamentoDLImpl appuntamentoDL1 = new AppuntamentoDLImpl(utenteDL1);
+    private AppuntamentoDLImpl appuntamentoDL1 = new AppuntamentoDLImpl(utenteDL1);*/
 
     /*@Test
     public void getApppuntamentiByUtente() throws Exception {

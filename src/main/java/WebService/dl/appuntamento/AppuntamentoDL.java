@@ -1,5 +1,9 @@
 package WebService.dl.appuntamento;
 
+import javax.inject.Named;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
 public class AppuntamentoDL {

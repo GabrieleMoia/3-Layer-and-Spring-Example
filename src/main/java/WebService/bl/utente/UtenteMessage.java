@@ -6,6 +6,10 @@ public class UtenteMessage implements BusMessage {
 
     public boolean enabled;
 
+    public UtenteMessage(){
+
+    }
+
     public UtenteMessage(boolean enabled){
         this.enabled=enabled;
     }

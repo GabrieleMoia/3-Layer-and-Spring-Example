@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-@Named("bus")
+
 public class BusImpl implements Bus {
     public <T> void register(Class<T> clazz,
                              MessageConsumer consumer) {
