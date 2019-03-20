@@ -39,7 +39,7 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
     @Override
     public void addAppuntamento(AppuntamentoBO appuntamentoBO) throws Exception {
         AppuntamentoDL appuntamentoDL = service.convertToAppuntamentoDL(appuntamentoBO);
-        if (validator(appuntamentoBO) && checkConcomitance(appuntamentoBO)) {
+        if (validator(appuntamentoBO)) {
             dataLayer.addAppuntamento(appuntamentoDL);
             bus.send(new AppuntamentoMessage(true));
         } else {
@@ -77,31 +77,6 @@ public class AppuntamentoBLImpl implements IAppuntamentoBL {
 
         boolean deleted = dataLayer.deleteAppuntamento(id);
         bus.send(new AppuntamentoMessage(false));
-    }
-
-
-    private boolean checkConcomitance(AppuntamentoBO appuntamentoBO) throws Exception {
-        List<AppuntamentoBO> appuntamentiBO = getAppuntamentiByIdUtente(appuntamentoBO.getIdUtente());
-        List<String> date = getDates(appuntamentoBO);
-        if (!appuntamentiBO.isEmpty()) {
-            if (!date.isEmpty()) {
-                for (AppuntamentoBO appuntamento : appuntamentiBO) {
-                    for (String data : date) {
-                        if (data.equals(appuntamento.getDataInizio()) || data.equals(appuntamento.getDataFine())) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    private List<String> getDates(AppuntamentoBO appuntamentoBO) {
-        List<String> date = new ArrayList<>();
-        date.add(appuntamentoBO.getDataFine());
-        date.add(appuntamentoBO.getDataInizio());
-        return date;
     }
 
     private boolean validator(AppuntamentoBO appuntamentoBO) throws Exception {

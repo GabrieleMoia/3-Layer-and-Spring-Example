@@ -1,17 +1,27 @@
 package WebService.dl.appuntamento;
 
 import javax.inject.Named;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "appuntamento")
 public class AppuntamentoDL {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "idUtente")
     private int idUtente;
+
+    @Column(name = "dataInizio")
     private String dataInizio;
+
+    @Column(name = "dataFine")
     private String dataFine;
+
+    @Column(name = "descrizione")
     private String descrizione;
 
     public AppuntamentoDL() {

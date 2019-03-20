@@ -1,7 +1,10 @@
 package WebService.bl.validator.appuntamento;
 
+import WebService.bl.appuntamento.AppuntamentoBLConverterService;
 import WebService.bl.appuntamento.AppuntamentoBO;
 import WebService.bl.appuntamento.IAppuntamentoBL;
+import WebService.dl.appuntamento.AppuntamentoDL;
+import WebService.dl.appuntamento.IAppuntamentoDL;
 
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -11,19 +14,22 @@ import java.util.List;
 public class ValidatorConcomitance implements AppuntamentoValidatorBL {
 
     private final AppuntamentoValidatorBL validatorBL;
-    private final IAppuntamentoBL appuntamentoBL;
+    private final IAppuntamentoDL dataLayer;
 
-    public ValidatorConcomitance(@Named("AppuntamentoBL") IAppuntamentoBL appuntamentoBL, @Named("AppuntamentoFinalValidator") AppuntamentoValidatorBL validatorBL) {
+    AppuntamentoBLConverterService service = new AppuntamentoBLConverterService();
+
+    public ValidatorConcomitance(@Named("AppuntamentoDL") IAppuntamentoDL dataLayer, @Named("AppuntamentoFinalValidator") AppuntamentoValidatorBL validatorBL) {
         this.validatorBL = validatorBL;
-        this.appuntamentoBL = appuntamentoBL;
+        this.dataLayer = dataLayer;
     }
 
     @Override
     public boolean validate(AppuntamentoBO appuntamentoBO) throws Exception {
-        List<AppuntamentoBO> appuntamentiBO = appuntamentoBL.getAppuntamentiByIdUtente(appuntamentoBO.getIdUtente());
-        List<String> date = getDates(appuntamentiBO);
+        AppuntamentoDL appuntamentoDL = service.convertToAppuntamentoDL(appuntamentoBO);
+        List<AppuntamentoDL> appuntamentiDL = dataLayer.getAppuntamentiByIdUtente(appuntamentoDL.getIdUtente());
+        List<String> date = getDates(appuntamentoDL);
         if (!date.isEmpty() && validatorBL.validate(appuntamentoBO)) {
-            for (AppuntamentoBO appuntamento : appuntamentiBO) {
+            for (AppuntamentoDL appuntamento : appuntamentiDL) {
                 for (String data : date) {
                     if (data.equals(appuntamento.getDataInizio()) || data.equals(appuntamento.getDataFine())) {
                         return false;
@@ -34,14 +40,10 @@ public class ValidatorConcomitance implements AppuntamentoValidatorBL {
         return true;
     }
 
-    private List<String> getDates(List<AppuntamentoBO> appuntamentiBO) {
+    private List<String> getDates(AppuntamentoDL appuntamentoDL) {
         List<String> date = new ArrayList<>();
-        if (!appuntamentiBO.isEmpty()) {
-            for (AppuntamentoBO appuntamento : appuntamentiBO) {
-                date.add(appuntamento.getDataFine());
-                date.add(appuntamento.getDataInizio());
-            }
-        }
+        date.add(appuntamentoDL.getDataFine());
+        date.add(appuntamentoDL.getDataInizio());
         return date;
     }
 }
