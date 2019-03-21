@@ -8,12 +8,12 @@ import org.springframework.jms.core.JmsTemplate;
 import javax.inject.Named;
 
 @Named("bus")
-public class ActivateMQ implements Bus { //implementa la classe bus per ereditare i metodi register e send
+public class UtentiEnabledMQ implements Bus { //implementa la classe bus per ereditare i metodi register e send
 
     private JmsTemplate jmsQueTemplate;
 
     //ignetto il metodo jmsQueueTemplate che è il nome del metodo nella classe jmsConfiguration con cui invio i messaggi (in questo caso alla coda)
-    public ActivateMQ(@Named("jmsQueueTemplate") JmsTemplate jmsQueTemplate) {
+    public UtentiEnabledMQ(@Named("jmsQueueTemplate") JmsTemplate jmsQueTemplate) {
         this.jmsQueTemplate = jmsQueTemplate;
     }
 

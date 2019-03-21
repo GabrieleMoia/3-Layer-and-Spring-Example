@@ -1,4 +1,4 @@
-package WebService.dl.count;
+package WebService.dl.count.utente;
 
 public interface CountDL {
     void incrementEnabled();

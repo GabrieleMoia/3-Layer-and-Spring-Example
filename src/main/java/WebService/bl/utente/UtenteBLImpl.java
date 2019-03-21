@@ -1,5 +1,6 @@
 package WebService.bl.utente;
 
+import WebService.bl.count.countUtentiEnabled.UtenteMessage;
 import WebService.bl.validator.utente.UtenteValidatorBL;
 import WebService.bus.Bus;
 import WebService.dl.utente.IUtenteDL;

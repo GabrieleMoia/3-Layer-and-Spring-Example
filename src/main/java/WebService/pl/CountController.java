@@ -1,6 +1,6 @@
 package WebService.pl;
 
-import WebService.bl.count.CountBL;
+import WebService.bl.count.countUtentiEnabled.CountBL;
 import WebService.bl.count.countAppuntamenti.CountAppuntamentiBL;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

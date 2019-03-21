@@ -1,4 +1,4 @@
-package WebService.bl.appuntamento;
+package WebService.bl.count.countAppuntamenti;
 
 import WebService.bus.BusMessage;
 

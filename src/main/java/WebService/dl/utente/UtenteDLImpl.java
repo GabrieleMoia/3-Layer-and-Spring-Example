@@ -1,6 +1,6 @@
 package WebService.dl.utente;
 
-import WebService.dl.count.CountDL;
+import WebService.dl.count.utente.CountDL;
 import WebService.persistence.JpaHelper;
 
 import javax.inject.Named;

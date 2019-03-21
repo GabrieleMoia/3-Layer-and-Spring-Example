@@ -1,4 +1,4 @@
-package WebService.bl.utente;
+package WebService.bl.count.countUtentiEnabled;
 
 import WebService.bus.BusMessage;
 

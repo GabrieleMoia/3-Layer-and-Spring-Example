@@ -1,9 +1,8 @@
-package WebService.bl.count;
+package WebService.bl.count.countUtentiEnabled;
 
-import WebService.bl.utente.UtenteMessage;
 import WebService.bus.Bus;
 import WebService.bus.BusMessage;
-import WebService.dl.count.CountDL;
+import WebService.dl.count.utente.CountDL;
 
 import javax.inject.Named;
 

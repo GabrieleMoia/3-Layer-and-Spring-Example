@@ -1,4 +1,4 @@
-package WebService.bl.count;
+package WebService.bl.count.countUtentiEnabled;
 
 import WebService.bus.MessageConsumer;
 

@@ -1,9 +1,7 @@
 package WebService.bl.appuntamento;
 
-import WebService.bl.utente.UtenteMessage;
 import WebService.bl.validator.appuntamento.AppuntamentoValidatorBL;
 import WebService.bus.Bus;
-import WebService.bus.BusMessage;
 import WebService.dl.appuntamento.AppuntamentoDL;
 import WebService.dl.appuntamento.IAppuntamentoDL;
 

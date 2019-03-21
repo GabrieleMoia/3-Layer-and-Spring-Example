@@ -1,6 +1,5 @@
 package WebService.bl.count.countAppuntamenti;
 
-import WebService.bl.appuntamento.AppuntamentoMessage;
 import WebService.bus.Bus;
 import WebService.bus.BusMessage;
 import WebService.dl.count.appuntamento.CountAppuntamentiDL;
